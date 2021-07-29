@@ -14,11 +14,11 @@ InputField.propTypes = {
 function InputField(props) {
   const { form, name, label, disabled } = props;
 
-  const { errors, formState } = form;
+  const { errors } = form;
 
   //   console.log(form);
 
-  const hasError = formState.touched[name] && errors[name];
+  const hasError = errors[name];
 
   //   console.log(formState.touched[name], errors[name]);
 
@@ -27,10 +27,12 @@ function InputField(props) {
       name={name}
       control={form.control}
       as={TextField}
+      margin="normal"
+      variant="outlined"
       fullWidth
       label={label}
       disabled={disabled}
-      errors={!hasError}
+      errors={!!hasError} // !! chuyển 1 field thành dạng boolean
       helperText={errors[name]?.message}
     />
     /* <p>errors={!!hasError}</p> */

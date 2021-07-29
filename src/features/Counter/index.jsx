@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { decrease, increase } from './CouterSlice';
+import { decrease, increase } from './CounterSlice';
 
 CounterFeatures.propTypes = {};
 

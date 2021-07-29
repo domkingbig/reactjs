@@ -1,11 +1,13 @@
-import { NavLink, Route, Switch, Redirect } from 'react-router-dom';
-import './App.css';
-import AlbumFeatures from './features/Album/pages';
-import NotFound from './components/NotFound';
-import TodoFeatures from './features/Todo/components/pages';
+import { Button } from '@material-ui/core';
 import { useEffect } from 'react';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import productApi from './api/productApi';
+import './App.css';
+import Header from './components/Header';
+import NotFound from './components/NotFound';
+import AlbumFeatures from './features/Album/pages';
 import CounterFeatures from './features/Counter';
+import TodoFeatures from './features/Todo/components/pages';
 
 function App() {
   useEffect(() => {
@@ -19,30 +21,18 @@ function App() {
     fetchProduct();
   }, []);
 
+  const show = () => {};
+
   return (
     <div>
-      Home Page
+      <Header />
+
       {/* <p>
       <Link to={{pathname:"/todos"}} >Todos</Link>
       </p>
       <p>
       <Link to={{pathname:"/albums"}}>Albums</Link>
       </p> */}
-      <p>
-        <NavLink
-          to={{ pathname: '/todos' }}
-          activeStyle={{
-            fontStyle: 'italic',
-            color: 'red',
-            textDecoration: 'line-through',
-          }}
-        >
-          Todos
-        </NavLink>
-      </p>
-      <p>
-        <NavLink to={{ pathname: '/albums' }}>Albums</NavLink>
-      </p>
       <Switch>
         <Redirect from="home" to="/" exact />
         <Redirect from="/post-list/:postId" to="/posts/:postId" exact />
