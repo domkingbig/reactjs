@@ -7,7 +7,9 @@ import {
   Paper,
 } from '@material-ui/core';
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
+import { addToCart } from '../../Cart/cartSlide';
 import AddToCartForm from '../components/AddToCartForm';
 import ProductAdditional from '../components/ProductAdditional';
 import ProductDescription from '../components/ProductDescription';
@@ -37,6 +39,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function DetailPage(props) {
+  const dispatch = useDispatch();
   const classes = useStyles();
   const {
     params: { productId },
@@ -53,7 +56,15 @@ function DetailPage(props) {
     );
   }
 
-  const handleAddToCartSubmit = (formValues) => {};
+  const handleAddToCartSubmit = ({ quantity }) => {
+    const action = addToCart({
+      id: product.id,
+      product,
+      quantity: quantity,
+    }); //payload chinh la object truyen vao, o day la object trong addToCart
+    console.log('action:', action);
+    dispatch(action);
+  };
   return (
     <Box>
       <Container>

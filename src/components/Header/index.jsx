@@ -1,4 +1,4 @@
-import { Box, IconButton, MenuItem, Menu } from '@material-ui/core';
+import { Box, IconButton, MenuItem, Menu, Badge } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -6,14 +6,15 @@ import DialogContent from '@material-ui/core/DialogContent';
 import { makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import { AccountCircle, Close } from '@material-ui/icons';
+import { AccountCircle, Close, ShoppingCart } from '@material-ui/icons';
 import CodeIcon from '@material-ui/icons/Code';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useHistory } from 'react-router-dom';
 import Login from '../../features/Auth/components/Login';
 import Register from '../../features/Auth/components/Register';
 import { logout } from '../../features/Auth/userSlice';
+import { cartItemsCountSelector } from '../../features/Cart/selectors';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,6 +49,8 @@ export default function Header() {
 
   const loggedInUser = useSelector((state) => state.user.current);
   const isLoggedIn = !!loggedInUser.id;
+  const cartItemsCount = useSelector(cartItemsCountSelector);
+  const history = useHistory();
 
   const [open, setOpen] = useState(false);
   const [mode, setMode] = useState(MODE.LOGIN);
@@ -74,6 +77,10 @@ export default function Header() {
     const actions = logout();
     dispatch(actions);
   };
+
+  const handleCartClick = () => {
+    history.push('/cart');
+  };
   const classes = useStyles();
 
   return (
@@ -84,7 +91,7 @@ export default function Header() {
 
           <Typography variant="h6" className={classes.title}>
             <Link className={classes.link} to={{ pathname: '/' }}>
-              News
+              Shop
             </Link>
           </Typography>
 
@@ -100,6 +107,12 @@ export default function Header() {
               Login
             </Button>
           )}
+
+          <IconButton aria-label="show 4 new mails" color="inherit">
+            <Badge badgeContent={cartItemsCount} color="secondary">
+              <ShoppingCart onClick={handleCartClick} />
+            </Badge>
+          </IconButton>
 
           {isLoggedIn && (
             <IconButton
