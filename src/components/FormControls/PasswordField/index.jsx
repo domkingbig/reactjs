@@ -1,4 +1,4 @@
-import { Input, OutlinedInput, TextField } from '@material-ui/core';
+import { TextField } from '@material-ui/core';
 import FormControl from '@material-ui/core/FormControl';
 import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -45,30 +45,36 @@ function PasswordField(props) {
         <Controller
           name={name}
           control={form.control}
-          as={TextField}
-          id={name}
-          variant="outlined"
-          type={showPassword ? 'text' : 'password'}
-          label={label}
-          //   value={password}
-          //   onChange={handleChange('password')}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={toggleShowPassword}
-                  // onMouseDown={handleMouseDownPassword} đã chặn mousedown và escape key tại header rồi nên không cần cái này nữa
-                  edge="end"
-                >
-                  {showPassword ? <Visibility /> : <VisibilityOff />}
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-          disabled={disabled}
-          errors={!hasError}
-          helperText={errors[name]?.message}
+          render={({ onChange, onBlur, value, name }) => (
+            <TextField
+              id={name}
+              variant="outlined"
+              type={showPassword ? 'text' : 'password'}
+              label={label}
+              //   value={password}
+              //   onChange={handleChange('password')}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={toggleShowPassword}
+                      // onMouseDown={handleMouseDownPassword} đã chặn mousedown và escape key tại header rồi nên không cần cái này nữa
+                      edge="end"
+                    >
+                      {showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+              disabled={disabled}
+              errors={!hasError}
+              helperText={errors[name]?.message}
+              value={value}
+              onChange={onChange}
+              onBlur={onBlur}
+            />
+          )}
         />
       </FormControl>
     </div>

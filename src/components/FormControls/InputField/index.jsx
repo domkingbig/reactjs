@@ -26,14 +26,22 @@ function InputField(props) {
     <Controller
       name={name}
       control={form.control}
-      as={TextField}
-      margin="normal"
-      variant="outlined"
-      fullWidth
-      label={label}
-      disabled={disabled}
-      errors={!!hasError} // !! chuyển 1 field thành dạng boolean
-      helperText={errors[name]?.message}
+      render={({ onChange, onBlur, value, name }) => (
+        <TextField
+          margin="normal"
+          variant="outlined"
+          fullWidth
+          label={label}
+          disabled={disabled}
+          errors={!!hasError} // !! chuyển 1 field thành dạng boolean
+          helperText={errors[name]?.message}
+          name={name}
+          value={value}
+          onChange={onChange}
+          onBlur={onBlur}
+        />
+      )}
+      m
     />
     /* <p>errors={!!hasError}</p> */
   );
